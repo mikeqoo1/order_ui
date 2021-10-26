@@ -17,15 +17,23 @@ router.get("/order", function (req, res, next) {
 
 router.post("/OrderMsg", function (req, res, next) {
 
-    //建立連線
-    var client = net.connect({ ip: '127.0.0.1', port: 8988 }, function () {
-        console.log("client端：向 server端 請求連線")
+    //建立下單跟回報連線
+    var SendClient = net.connect({ ip: '127.0.0.1', port: 8988 }, function () {
+        console.log("下單client端：向server端請求連線")
+    });
+
+    var RecvCleint = net.connect({ ip: '127.0.0.1', port: 8989 }, function () {
+        console.log("回報client端：向server端請求連線")
     });
 
     //connect event :與server端連線成功時的事件
-    client.on("connect", function (data) {
-        console.log("client端：與 server端 連線成功，可以開始傳輸資料")
+    SendClient.on("connect", function (data) {
+        console.log("下單client端：與server端連線成功， 可以開始傳輸資料")
     });
+    RecvCleint.on("connect", function (data) {
+        console.log("回報client端：與server端連線成功， 可以開始接收資料")
+    });
+
 
 
     //組電文
@@ -51,23 +59,44 @@ router.post("/OrderMsg", function (req, res, next) {
         ocode: req.body.ocode,
         filler: "                                               "
     };
+
+    if (msg.ecode === "0") {
+        msg.tqty = msg.tqty * 1000;
+    }
+    msg.tqty = msg.tqty.toString().padStart(8, 0);
+
+    msg.price = msg.price * 10000;
+    msg.price = msg.price.toString().padStart(10, 0);
+
+    console.log(msg.tqty);
+    console.log(msg.price);
     var sendmsg = msg.bhno + msg.msgo + msg.cdi + msg.insq + msg.ecode + msg.tdate + msg.ttime + msg.cseq + msg.ckno +
         msg.fflag + msg.stock + msg.tqty + msg.price + msg.bs + msg.sale + msg.fcode + msg.ocode + msg.filler + "\n"
 
     //Send Order Msg
-    client.write(sendmsg, function () {
+    SendClient.write(sendmsg, function () {
         console.log("client端：開始傳輸資料，傳輸的資料為", sendmsg);
-        //結束client端連線
-        client.end();
-
-        res.send("下單成功, 訊息:[" + sendmsg + "]");
+        //res.send("下單成功, 訊息:[" + sendmsg + "]");
     });
 
-    client.on("error", function (ex) {
+    RecvCleint.on('data', function (data) {
+        console.log('client端：收到 server端 傳輸資料為 ' + data.toString())
+        //結束client端 連線
+        SendClient.end();
+        RecvCleint.end();
+        res.send("下單訊息:[" + sendmsg + "]。回報訊息:[" + data + "]");
+    })
+
+    SendClient.on("error", function (err) {
         console.log("!!!~~~下單發現錯誤~~~!!!");
-        console.log(ex);
-        res.send("下單失敗, 訊息:[" + ex + "]");
+        console.log(err);
+        res.send("下單失敗, 訊息:[" + err + "]");
+        //結束client端連線
+        SendClient.end();
+        RecvCleint.end();
     });
+
+
 });
 
 

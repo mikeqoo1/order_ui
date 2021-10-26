@@ -12,51 +12,51 @@
         <h1>新單下單介面</h1>
         <div>
             <label>公司別(8450):</label>
-            <input type="text" name="bhno" placeholder="bhno" />
+            <input type="text" name="bhno" placeholder="bhno" value="8450"/>
         </div>
         <div>
             <label>網單:</label>
-            <input type="text" name="msgo" placeholder="msgo">
+            <input type="text" name="msgo" placeholder="msgo" value="999001">
         </div>
         <div>
             <label>訊息序號:</label>
-            <input type="text" name="insq" placeholder="insq">
+            <input type="text" name="insq" placeholder="insq" value="999001">
         </div>
         <div>
             <label>交易別(0-整股 2-零股):</label>
-            <input type="text" name="ecode" placeholder="ecode">
+            <input type="text" name="ecode" placeholder="ecode" value="0">
         </div>
         <div>
             <label>投資人帳號(982477):</label>
-            <input type="text" name="cseq" placeholder="cseq">
+            <input type="text" name="cseq" placeholder="cseq" value="982477">
         </div>
         <div>
             <label>投資人帳號檢查碼(4):</label>
-            <input type="text" name="ckno" placeholder="ckno">
+            <input type="text" name="ckno" placeholder="ckno" value="7">
         </div>
         <div>
             <label>股票代號:</label>
-            <input type="text" name="stock" placeholder="stock">
+            <input type="text" name="stock" placeholder="stock" value="1260  ">
         </div>
         <div>
             <label>委託數量:</label>
-            <input type="text" name="tqty" placeholder="tqty">
+            <input type="text" name="tqty" placeholder="tqty" value="3">
         </div>
         <div>
             <label>委託價錢:</label>
-            <input type="text" name="price" placeholder="price">
+            <input type="text" name="price" placeholder="price" value="21">
         </div>
         <div>
             <label>買賣別(B-買 S-賣):</label>
-            <input type="text" name="bs" placeholder="B-買 S-賣">
+            <input type="text" name="bs" placeholder="B-買 S-賣" value="B">
         </div>
         <div>
             <label>強制碼(預設空白):</label>
-            <input type="text" name="fcode" placeholder="預設空白">
+            <input type="text" name="fcode" placeholder="預設空白" value=" ">
         </div>
         <div>
             <label>來源別(預設空白 4,A是key-in):</label>
-            <input type="text" name="ocode" placeholder="預設空白 4,A是key-in">
+            <input type="text" name="ocode" placeholder="預設空白 4,A是key-in" value=" ">
         </div>
         <div>
             <input type='submit' value='下單'>
