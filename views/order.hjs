@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+</head>
+
+<body>
+    <form name="order" action="OrderMsg" method="post" accept-charset="utf-8">
+        <h1>新單下單介面</h1>
+        <div>
+            <label>公司別(8450):</label>
+            <input type="text" name="bhno" placeholder="bhno" />
+        </div>
+        <div>
+            <label>網單:</label>
+            <input type="text" name="msgo" placeholder="msgo">
+        </div>
+        <div>
+            <label>訊息序號:</label>
+            <input type="text" name="insq" placeholder="insq">
+        </div>
+        <div>
+            <label>交易別(0-整股 2-零股):</label>
+            <input type="text" name="ecode" placeholder="ecode">
+        </div>
+        <div>
+            <label>投資人帳號(982477):</label>
+            <input type="text" name="cseq" placeholder="cseq">
+        </div>
+        <div>
+            <label>投資人帳號檢查碼(4):</label>
+            <input type="text" name="ckno" placeholder="ckno">
+        </div>
+        <div>
+            <label>股票代號:</label>
+            <input type="text" name="stock" placeholder="stock">
+        </div>
+        <div>
+            <label>委託數量:</label>
+            <input type="text" name="tqty" placeholder="tqty">
+        </div>
+        <div>
+            <label>委託價錢:</label>
+            <input type="text" name="price" placeholder="price">
+        </div>
+        <div>
+            <label>買賣別(B-買 S-賣):</label>
+            <input type="text" name="bs" placeholder="B-買 S-賣">
+        </div>
+        <div>
+            <label>強制碼(預設空白):</label>
+            <input type="text" name="fcode" placeholder="預設空白">
+        </div>
+        <div>
+            <label>來源別(預設空白 4,A是key-in):</label>
+            <input type="text" name="ocode" placeholder="預設空白 4,A是key-in">
+        </div>
+        <div>
+            <input type='submit' value='下單'>
+            <input type='reset' value='清空欄位'>
+            <input type='button' value='回上一頁' onclick="javascript: location.href='/'">
+        </div>
+    </form>
+</body>
+
+</html>
