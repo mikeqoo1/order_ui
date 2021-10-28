@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+</head>
+
+<body>
+    <form name="change" action="ChangeOrder" method="post" accept-charset="utf-8">
+        <h1>改單下單介面</h1>
+        <div>
+            <label>公司別(8450):</label>
+            <input type="text" name="bhno" placeholder="bhno" value="8450" />
+        </div>
+        <div>
+            <label>訊息序號:</label>
+            <input type="text" name="mgsq" placeholder="原網路單號">
+        </div>
+        <label>請選擇異動別:</label>
+        <select name="cdi">
+            <option value="C" selected>改量</option>
+            <option value="P">改價</option>
+        </select>
+        <div>
+            <label>網單:</label>
+            <input type="text" name="insq" placeholder="insq">
+        </div>
+        <div>
+            <label>取消數量:</label>
+            <input type="text" name="tqty" placeholder="改價時填0">
+        </div>
+        <div>
+            <label>櫃號:</label>
+            <input type="text" name="term" placeholder="櫃號" value="B">
+        </div>
+        <div>
+            <label>委託書號:</label>
+            <input type="text" name="desq" placeholder="委託書號" value=" ">
+        </div>
+        <div>
+            <label>來源別(預設空白 4,A是key-in):</label>
+            <input type="text" name="ocode" placeholder="預設空白 4,A是key-in" value=" ">
+        </div>
+        <div>
+            <label>修改後單價:</label>
+            <input type="text" name="price" placeholder="改量時填0">
+        </div>
+        <div>
+            <input type='submit' value='改單' class="btn btn-success">
+            <input type='reset' value='初始化' class="btn btn-secondary">
+            <input type='button' value='回上一頁' class="btn btn-primary" onclick="javascript: location.href='/'">
+        </div>
+    </form>
+</body>
+
+</html>
