@@ -228,10 +228,10 @@ router.post("/ChangeOrder", function (req, res, next) {
     SendClient.on("error", function (err) {
         console.log("!!!~~~改單發現錯誤~~~!!!");
         console.log(err);
-        res.send("改單失敗, 訊息:[" + err + "]");
         //結束client端連線
         SendClient.end();
         RecvCleint.end();
+        res.send("改單失敗, 訊息:[" + err + "]");
     });
 });
 
