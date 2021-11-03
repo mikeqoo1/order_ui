@@ -35,8 +35,8 @@
             <input type="text" name="desq" placeholder="委託書號" value=" ">
         </div>
         <div>
-            <label>來源別(預設空白 4,A是key-in):</label>
-            <input type="text" name="ocode" placeholder="預設空白 4,A是key-in" value=" ">
+            <label>來源別(預設N 4,A是營業員 空白是KeyIn):</label>
+            <input type="text" name="ocode" placeholder="預設N 4,A是營業員 空白是KeyIn" value="N">
         </div>
         <div>
             <input type='submit' value='刪單' class="btn btn-success">

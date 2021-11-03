@@ -61,8 +61,8 @@
                 <input type="text" name="fcode" placeholder="預設空白" value=" ">
             </div>
             <div>
-                <label>來源別(預設空白 4,A是key-in):</label>
-                <input type="text" name="ocode" placeholder="預設空白 4,A是key-in" value=" ">
+                <label>來源別(預設N 4,A是營業員 空白是KeyIn):</label>
+                <input type="text" name="ocode" placeholder="預設N 4,A是營業員 空白是KeyIn" value="N">
             </div>
             <div>
                 <input type='submit' value='下單' id="go" class="btn btn-success">
