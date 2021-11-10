@@ -30,11 +30,11 @@ router.get("/change", function (req, res, next) {
 router.post("/OrderMsg", function (req, res, next) {
 
     //建立下單跟回報連線
-    var SendClient = net.connect({ ip: '127.0.0.1', port: 8988 }, function () {
+    var SendClient = net.connect({ host: '127.0.0.1', port: 8988 }, function () {
         console.log("下單client端：向server端請求連線")
     });
 
-    var RecvCleint = net.connect({ ip: '127.0.0.1', port: 8989 }, function () {
+    var RecvCleint = net.connect({ host: '127.0.0.1', port: 8989 }, function () {
         console.log("回報client端：向server端請求連線")
     });
 
@@ -109,11 +109,11 @@ router.post("/OrderMsg", function (req, res, next) {
 router.post("/DeleteOrder", function (req, res, next) {
 
     //建立下單跟回報連線
-    var SendClient = net.connect({ ip: '127.0.0.1', port: 8988 }, function () {
+    var SendClient = net.connect({ host: '127.0.0.1', port: 8988 }, function () {
         console.log("下單client端：向server端請求連線")
     });
 
-    var RecvCleint = net.connect({ ip: '127.0.0.1', port: 8989 }, function () {
+    var RecvCleint = net.connect({ host: '127.0.0.1', port: 8989 }, function () {
         console.log("回報client端：向server端請求連線")
     });
 
@@ -171,11 +171,11 @@ router.post("/DeleteOrder", function (req, res, next) {
 router.post("/ChangeOrder", function (req, res, next) {
 
     //建立下單跟回報連線
-    var SendClient = net.connect({ ip: '127.0.0.1', port: 8988 }, function () {
+    var SendClient = net.connect({ host: '127.0.0.1', port: 8988 }, function () {
         console.log("下單client端：向server端請求連線")
     });
 
-    var RecvCleint = net.connect({ ip: '127.0.0.1', port: 8989 }, function () {
+    var RecvCleint = net.connect({ host: '127.0.0.1', port: 8989 }, function () {
         console.log("回報client端：向server端請求連線")
     });
 
