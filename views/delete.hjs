@@ -8,42 +8,45 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="/javascripts/delete.js"></script>
     <title></title>
 </head>
 
-<body>
-    <form name="delete" action="DeleteOrder" method="post" accept-charset="utf-8">
-        <h1>刪單下單介面</h1>
-        <div>
-            <label>公司別(8450):</label>
-            <input type="text" name="bhno" placeholder="bhno" value="8450" />
-        </div>
-        <div>
-            <label>訊息序號:</label>
-            <input type="text" name="mgsq" placeholder="原網路單號">
-        </div>
-        <div>
-            <label>網單:</label>
-            <input type="text" name="insq" placeholder="insq">
-        </div>
-        <div>
-            <label>櫃號:</label>
-            <input type="text" name="term" placeholder="櫃號" value="B">
-        </div>
-        <div>
-            <label>委託書號:</label>
-            <input type="text" name="desq" placeholder="委託書號" value=" ">
-        </div>
-        <div>
-            <label>來源別(預設N 4,A是營業員 空白是KeyIn):</label>
-            <input type="text" name="ocode" placeholder="預設N 4,A是營業員 空白是KeyIn" value="N">
-        </div>
-        <div>
-            <input type='submit' value='刪單' class="btn btn-success">
-            <input type='reset' value='初始化' class="btn btn-secondary">
-            <input type='button' value='回上一頁' class="btn btn-primary" onclick="javascript: location.href='/'">
-        </div>
-    </form>
+<body style="background-image:url(../images/維尼小豬.jpg);">
+    <div class="container">
+        <form name="delete" id="GHI" action="DeleteOrder" method="post" accept-charset="utf-8">
+            <h1>刪單下單介面</h1>
+            <div>
+                <label>公司別(8450):</label>
+                <input type="text" name="bhno" placeholder="bhno" value="8450" />
+            </div>
+            <div>
+                <label>訊息序號:</label>
+                <input type="text" name="mgsq" placeholder="原網路單號">
+            </div>
+            <div>
+                <label>網單:</label>
+                <input type="text" name="insq" placeholder="insq">
+            </div>
+            <div>
+                <label>櫃號:</label>
+                <input type="text" name="term" placeholder="櫃號" value="D">
+            </div>
+            <div>
+                <label>委託書號:</label>
+                <input type="text" name="desq" placeholder="委託書號" value=" ">
+            </div>
+            <div>
+                <label>來源別(預設N 4,A是營業員 空白是KeyIn):</label>
+                <input type="text" name="ocode" placeholder="預設N 4,A是營業員 空白是KeyIn" value="N">
+            </div>
+            <div>
+                <input type='submit' value='刪單' id="go" class="btn btn-success">
+                <input type='reset' value='初始化' class="btn btn-secondary">
+                <input type='button' value='回上一頁' class="btn btn-primary" onclick="javascript: location.href='/'">
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>
