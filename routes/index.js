@@ -2,6 +2,12 @@ var express = require("express");
 var format = require("date-format"); //時間格式
 var net = require("net");
 var router = express.Router();
+var order_record = [];
+var report_record = [];
+var Iconv = require('iconv').Iconv;
+var iconvToUtf8 = new Iconv('Big5', 'UTF8');
+
+
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -85,23 +91,30 @@ router.post("/OrderMsg", function (req, res, next) {
     SendClient.write(sendmsg, function () {
         console.log("client端：開始傳輸資料，傳輸的資料為", sendmsg);
         //res.send("下單成功, 訊息:[" + sendmsg + "]");
+        order_record.push(sendmsg);
     });
 
+    var LoL;
     RecvCleint.on('data', function (data) {
-        console.log('client端：收到 server端 傳輸資料為 ' + data.toString())
+        var buffer = iconvToUtf8.convert(data);
+        console.log('client端：收到 server端 傳輸資料為 ' + buffer);
         //結束client端 連線
         SendClient.end();
         RecvCleint.end();
-        res.send("下單訊息:[" + sendmsg + "]。回報訊息:[" + data + "]");
+        report_record.push(buffer);
+        LoL = buffer;
+        res.send(LoL);
+        res.end();
     })
 
     SendClient.on("error", function (err) {
         console.log("!!!~~~下單發現錯誤~~~!!!");
         console.log(err);
-        res.send("下單失敗, 訊息:[" + err + "]");
         //結束client端連線
         SendClient.end();
         RecvCleint.end();
+        res.send("下單發現錯誤");
+        res.end();
     });
 });
 

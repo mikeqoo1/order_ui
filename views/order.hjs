@@ -38,7 +38,7 @@
             </div>
             <div>
                 <label>投資人帳號檢查碼(4):</label>
-                <input type="text" name="ckno" placeholder="ckno" value="7">
+                <input type="text" name="ckno" placeholder="ckno" value="4">
             </div>
             <div>
                 <label>股票代號:</label>
