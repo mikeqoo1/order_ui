@@ -103,8 +103,6 @@ router.post("/OrderMsg", function (req, res, next) {
         RecvCleint.end();
         report_record.push(buffer);
         LoL = buffer;
-        res.send(LoL);
-        res.end();
     })
 
     SendClient.on("error", function (err) {
@@ -113,9 +111,11 @@ router.post("/OrderMsg", function (req, res, next) {
         //結束client端連線
         SendClient.end();
         RecvCleint.end();
-        res.send("下單發現錯誤");
-        res.end();
+        // res.send("下單發現錯誤");
+        // res.end();
     });
+    res.send(LoL);
+    res.end()
 });
 
 //刪單
