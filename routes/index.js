@@ -16,20 +16,77 @@ router.get("/", function (req, res, next) {
 
 //開啟 Order page (新單畫面)
 router.get("/order", function (req, res, next) {
-    // use order.ejs
+    // use order.hjs
     res.render("order", { title: "新單下單介面" });
 });
 
 //開啟刪單畫面
 router.get("/delete", function (req, res, next) {
-    // use order.ejs
+    // use delete.hjs
     res.render("delete", { title: "刪單下單介面" });
 });
 
 //開啟改單畫面
 router.get("/change", function (req, res, next) {
-    // use order.ejs
+    // use change.hjs
     res.render("change", { title: "改單下單介面" });
+});
+
+//取得回報畫面
+router.get("/reportinfo", function (req, res, next) {
+    res.render("report", { title: "回報介面" });
+});
+
+router.get("/report", function (req, res, next) {
+    //解析回報
+    report_record.push("8450000000IH000100000098261259996  000000000000300000000056000B01111102085018911 230R                                                            0000000000      ")
+    report_record.push("8450000000PH000100000098261259996  000030000000000000000060000B01111102085032852 230R                                                            0000055000      ")
+    report_record.push("8450000000CH000100000098261259996  000030000000290000000050000B01111102085043763 230R                                                            0000050000      ")
+    report_record.push("8450000000DH000100000098261259996  000029000000000000000050000B01111102085046564 230R                                                            0000050000      ")
+    var data
+    report_record.forEach(function (item, index, array) {
+        console.log(item, index);
+        公司別 = item.substr(0, 4)
+        傳送序號 = item.substr(4, 6)
+        異動別 = item.substr(10, 1)
+        櫃號 = item.substr(11, 1)
+        委託書號 = item.substr(12, 4)
+        網路單號 = item.substr(16, 6)
+        客戶帳號 = item.substr(22, 6)
+        檢查碼 = item.substr(28, 1)
+        商品代號 = item.substr(29, 6)
+        交易別 = item.substr(35, 1)
+        改前數量 = item.substr(36, 6)
+        改後數量 = item.substr(44, 6)
+        委託單價 = item.substr(52, 10)
+        買賣別 = item.substr(62, 1)
+        委託日期 = item.substr(63, 8)
+        委託時間 = item.substr(71, 9)
+        來源別 = item.substr(80, 1)
+        營業員 = item.substr(81, 3)
+        回報代碼 = item.substr(84, 1)
+        回報訊息 = item.substr(85, 60)
+        改價前單價 = item.substr(145, 10)
+        if (異動別 == "I")
+            console.log("新單回報")
+        if (異動別 == "C")
+            console.log("改量回報")
+        if (異動別 == "P")
+            console.log("改價回報")
+        if (異動別 == "D")
+            console.log("刪單回報")
+
+        console.log(公司別 + "|" + 傳送序號 + "|" + 異動別 + "|" + 櫃號 + "|" + 委託書號 + "|" + 網路單號 + "|" +
+            客戶帳號 + "|" + 檢查碼 + "|" + 商品代號 + "|" + 交易別 + "|" + 改前數量 + "|" + 改後數量 + "|" +
+            委託單價 + "|" + 買賣別 + "|" + 委託日期 + "|" + 委託時間 + "|" + 來源別 + "|" + 營業員 + "|" +
+            回報代碼 + "|" + 回報訊息 + "|" + 改價前單價)
+        data = {
+            data: report_record,
+            筆數: report_record.length
+        }
+
+    });
+    res.json(data);
 });
 
 //新單
@@ -37,19 +94,19 @@ router.post("/OrderMsg", function (req, res, next) {
 
     //建立下單跟回報連線
     var SendClient = net.connect({ host: '127.0.0.1', port: 8988 }, function () {
-        console.log("下單client端：向server端請求連線")
+        console.log("下單client端:向server端請求連線")
     });
 
     var RecvCleint = net.connect({ host: '127.0.0.1', port: 8989 }, function () {
-        console.log("回報client端：向server端請求連線")
+        console.log("回報client端:向server端請求連線")
     });
 
     //connect event :與server端連線成功時的事件
     SendClient.on("connect", function (data) {
-        console.log("下單client端：與server端連線成功， 可以開始傳輸資料")
+        console.log("下單client端:與server端連線成功, 可以開始傳輸資料")
     });
     RecvCleint.on("connect", function (data) {
-        console.log("回報client端：與server端連線成功， 可以開始接收資料")
+        console.log("回報client端:與server端連線成功, 可以開始接收資料")
     });
 
     //組電文
@@ -65,7 +122,7 @@ router.post("/OrderMsg", function (req, res, next) {
         ttime: nowtime,
         cseq: req.body.cseq,
         ckno: req.body.ckno,
-        fflag: "I",
+        fflag: " ",
         stock: req.body.stock.padEnd(6, " "),
         tqty: req.body.tqty,
         price: req.body.price,
@@ -89,20 +146,18 @@ router.post("/OrderMsg", function (req, res, next) {
 
     //Send Order Msg
     SendClient.write(sendmsg, function () {
-        console.log("client端：開始傳輸資料，傳輸的資料為", sendmsg);
+        console.log("client端:開始傳輸資料,傳輸的資料為[", sendmsg, "]");
         //res.send("下單成功, 訊息:[" + sendmsg + "]");
         order_record.push(sendmsg);
     });
 
-    var LoL;
     RecvCleint.on('data', function (data) {
         var buffer = iconvToUtf8.convert(data);
-        console.log('client端：收到 server端 傳輸資料為 ' + buffer);
+        console.log('client端:收到 server端 傳輸資料為\n' + buffer);
         //結束client端 連線
         SendClient.end();
         RecvCleint.end();
         report_record.push(buffer);
-        LoL = buffer;
     })
 
     SendClient.on("error", function (err) {
@@ -114,7 +169,8 @@ router.post("/OrderMsg", function (req, res, next) {
         // res.send("下單發現錯誤");
         // res.end();
     });
-    res.send(LoL);
+
+    res.send("收到回報");
     res.end()
 });
 
@@ -123,19 +179,19 @@ router.post("/DeleteOrder", function (req, res, next) {
 
     //建立下單跟回報連線
     var SendClient = net.connect({ host: '127.0.0.1', port: 8988 }, function () {
-        console.log("下單client端：向server端請求連線")
+        console.log("下單client端:向server端請求連線")
     });
 
     var RecvCleint = net.connect({ host: '127.0.0.1', port: 8989 }, function () {
-        console.log("回報client端：向server端請求連線")
+        console.log("回報client端:向server端請求連線")
     });
 
     //connect event :與server端連線成功時的事件
     SendClient.on("connect", function (data) {
-        console.log("下單client端：與server端連線成功， 可以開始傳輸資料")
+        console.log("下單client端:與server端連線成功, 可以開始傳輸資料")
     });
     RecvCleint.on("connect", function (data) {
-        console.log("回報client端：與server端連線成功， 可以開始接收資料")
+        console.log("回報client端:與server端連線成功, 可以開始接收資料")
     });
 
     //組電文
@@ -158,16 +214,16 @@ router.post("/DeleteOrder", function (req, res, next) {
 
     //Send Msg
     SendClient.write(sendmsg, function () {
-        console.log("client端：開始傳輸資料，傳輸的資料為", sendmsg);
+        console.log("client端:開始傳輸資料,傳輸的資料為", sendmsg);
         //res.send("下單成功, 訊息:[" + sendmsg + "]");
     });
 
     RecvCleint.on('data', function (data) {
-        console.log('client端：收到 server端 傳輸資料為 ' + data.toString())
+        var buffer = iconvToUtf8.convert(data);
+        console.log('client端:收到 server端 傳輸資料為\n' + buffer)
         //結束client端 連線
         SendClient.end();
         RecvCleint.end();
-        res.send("刪單訊息:[" + sendmsg + "]。回報訊息:[" + data + "]");
     })
 
     SendClient.on("error", function (err) {
@@ -178,6 +234,8 @@ router.post("/DeleteOrder", function (req, res, next) {
         SendClient.end();
         RecvCleint.end();
     });
+    res.send("收到回報");
+    res.end()
 });
 
 //改單
@@ -185,19 +243,19 @@ router.post("/ChangeOrder", function (req, res, next) {
 
     //建立下單跟回報連線
     var SendClient = net.connect({ host: '127.0.0.1', port: 8988 }, function () {
-        console.log("下單client端：向server端請求連線")
+        console.log("下單client端:向server端請求連線")
     });
 
     var RecvCleint = net.connect({ host: '127.0.0.1', port: 8989 }, function () {
-        console.log("回報client端：向server端請求連線")
+        console.log("回報client端:向server端請求連線")
     });
 
     //connect event :與server端連線成功時的事件
     SendClient.on("connect", function (data) {
-        console.log("下單client端：與server端連線成功， 可以開始傳輸資料")
+        console.log("下單client端:與server端連線成功, 可以開始傳輸資料")
     });
     RecvCleint.on("connect", function (data) {
-        console.log("回報client端：與server端連線成功， 可以開始接收資料")
+        console.log("回報client端:與server端連線成功, 可以開始接收資料")
     });
 
     //組電文
@@ -226,16 +284,16 @@ router.post("/ChangeOrder", function (req, res, next) {
 
     //Send Msg
     SendClient.write(sendmsg, function () {
-        console.log("client端：開始傳輸資料，傳輸的資料為", sendmsg);
+        console.log("client端:開始傳輸資料,傳輸的資料為", sendmsg);
         //res.send("下單成功, 訊息:[" + sendmsg + "]");
     });
 
     RecvCleint.on('data', function (data) {
-        console.log('client端：收到 server端 傳輸資料為 ' + data.toString())
+        var buffer = iconvToUtf8.convert(data);
+        console.log('client端:收到 server端 傳輸資料為\n' + buffer)
         //結束client端 連線
         SendClient.end();
         RecvCleint.end();
-        res.send("改單訊息:[" + sendmsg + "]。回報訊息:[" + data + "]");
     })
 
     SendClient.on("error", function (err) {
@@ -246,6 +304,8 @@ router.post("/ChangeOrder", function (req, res, next) {
         RecvCleint.end();
         res.send("改單失敗, 訊息:[" + err + "]");
     });
+    res.send("收到回報");
+    res.end()
 });
 
 
